@@ -1,0 +1,355 @@
+This is the FINAL user-facing UI redesign for RailZen AI.
+
+Use the attached Dribbble reference images as the PRIMARY visual reference.
+
+I want the RailZen AI interface to closely follow the same overall design language, composition, layout quality, visual hierarchy, dark enterprise aesthetic, dashboard structure, card styling, navigation approach, data visualization style, and premium feel shown in the references.
+
+Do not make a generic interpretation of the references. Recreate the same type of polished experience and visual quality for RailZen AI, adapted to our railway-maintenance product.
+
+IMPORTANT:
+Do not copy the original brand name, logo, proprietary illustrations, or unrelated text from the references. Create an original RailZen AI identity while closely matching the visual design approach.
+
+━━━━━━━━━━━━━━━━━━━━
+BRAND & IDENTITY
+━━━━━━━━━━━━━━━━━━━━
+
+Product name:
+RailZen AI
+
+Subtitle:
+AI-Powered Railway Maintenance Planning & Optimization
+
+Create a distinctive RailZen AI logo.
+
+The logo should visually represent:
+- Railway / railway tracks
+- AI / intelligent technology
+- Reliability
+- Modern infrastructure
+
+Create a simple, premium, recognizable logo mark that works in the sidebar, top navigation and login/brand areas.
+
+Do NOT use a generic AI brain icon.
+
+Use an original railway + AI-inspired symbol.
+
+━━━━━━━━━━━━━━━━━━━━
+COLOR SYSTEM
+━━━━━━━━━━━━━━━━━━━━
+
+Remove the current green/cyan-heavy appearance.
+
+Use a premium dark railway-operations theme:
+
+- Deep navy / charcoal background
+- Dark slate surfaces
+- Warm orange as the primary accent
+- Orange for important actions, active states, warnings and highlights
+- White / light gray typography
+- Muted gray secondary text
+- Very subtle supporting accent colors only when necessary for status indication
+
+Orange should be the recognizable RailZen AI accent.
+
+The interface should feel sophisticated, premium and enterprise-grade.
+
+Avoid excessive gradients.
+Avoid excessive glowing effects.
+Avoid bright neon colors.
+Avoid the current green visual identity.
+
+━━━━━━━━━━━━━━━━━━━━
+VERY IMPORTANT — HIDE DEVELOPMENT PHASES
+━━━━━━━━━━━━━━━━━━━━
+
+The following are INTERNAL development concepts only:
+
+P0
+P0.1
+P0.2
+Phase 0
+Phase 0.1
+Prototype
+01 / 01
+Foundation
+Foundation Monitor
+Development phase
+Internal implementation terminology
+
+NONE of these must appear anywhere in the user-facing application.
+
+The user should see RailZen AI as a finished professional product.
+
+Our internal development phases will be handled separately and must never be exposed in the UI.
+
+━━━━━━━━━━━━━━━━━━━━
+MAIN APPLICATION
+━━━━━━━━━━━━━━━━━━━━
+
+Create a professional desktop railway operations control center similar in quality and visual structure to the selected reference.
+
+LEFT SIDEBAR:
+
+RailZen AI logo + name
+
+Navigation:
+
+Overview
+Maintenance Planning
+Network
+Assets
+Alerts
+Analytics
+Reports
+AI Assistant
+Settings
+
+Add appropriate clean icons.
+
+The sidebar should be elegant, compact and professional.
+
+━━━━━━━━━━━━━━━━━━━━
+TOP BAR
+━━━━━━━━━━━━━━━━━━━━
+
+Include:
+
+- Current page title
+- Railway region / network selector
+- Search
+- Notifications
+- User profile
+- Role indicator
+- Profile dropdown
+
+Do NOT permanently show a specific fictional person such as "Asha Menon" as the identity of the product.
+
+Use a realistic demo user but make the interface role-based.
+
+Example:
+
+Operations Manager
+Maintenance Planner
+Network Administrator
+Maintenance Manager
+
+The role/profile system should be designed so different permissions and dashboards can be connected later.
+
+━━━━━━━━━━━━━━━━━━━━
+OVERVIEW DASHBOARD
+━━━━━━━━━━━━━━━━━━━━
+
+The main dashboard should visually follow the reference dashboard structure.
+
+Include:
+
+Network Health
+Active Maintenance
+Critical Alerts
+Assets at Risk
+Planned vs Completed
+Maintenance Efficiency
+
+Use large, clean KPI cards with strong hierarchy.
+
+Below the KPIs include:
+
+NETWORK OPERATING PICTURE
+
+A large railway network visualization/map-style panel showing:
+
+- Railway lines
+- Stations
+- Maintenance locations
+- Assets
+- Healthy assets
+- Warning assets
+- Critical assets
+- Active maintenance locations
+
+Make this one of the visual highlights of the application.
+
+Use clearly labeled DEMO DATA where information is simulated.
+
+━━━━━━━━━━━━━━━━━━━━
+MAINTENANCE
+━━━━━━━━━━━━━━━━━━━━
+
+Include a professional maintenance workload section.
+
+Show:
+
+- Maintenance task
+- Asset
+- Railway section
+- Location
+- Priority
+- Risk
+- Scheduled date
+- Status
+- Assigned team
+
+Use realistic railway maintenance demo data.
+
+━━━━━━━━━━━━━━━━━━━━
+ALERTS
+━━━━━━━━━━━━━━━━━━━━
+
+Create a polished alert system.
+
+Categories:
+
+Critical
+Warning
+Information
+
+Examples:
+
+Track inspection overdue
+Signal equipment degradation
+High-risk asset detected
+Scheduled maintenance conflict
+Unexpected network disruption
+
+Make critical information immediately visible without making the interface visually noisy.
+
+━━━━━━━━━━━━━━━━━━━━
+ASSET MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━
+
+Create an enterprise asset overview.
+
+Show:
+
+- Asset ID
+- Asset type
+- Location
+- Health score
+- Condition
+- Last inspection
+- Next maintenance
+- Risk level
+
+Asset examples:
+
+Track sections
+Signals
+Switches
+Bridges
+Locomotive-related infrastructure
+Electrical systems
+
+━━━━━━━━━━━━━━━━━━━━
+AI ASSISTANT
+━━━━━━━━━━━━━━━━━━━━
+
+RailZen AI must have a dedicated AI capability.
+
+Create a professional AI insights section containing:
+
+- Predictive maintenance recommendations
+- Risk prediction
+- Maintenance prioritization
+- Scheduling conflict detection
+- Recommended actions
+- Network insights
+
+The AI interface should feel integrated into the railway operations platform, not like a generic chatbot.
+
+Use simulated responses for now, but structure the UI so real AI functionality can be connected later.
+
+━━━━━━━━━━━━━━━━━━━━
+ANALYTICS
+━━━━━━━━━━━━━━━━━━━━
+
+Create polished analytics visualizations for:
+
+- Network reliability
+- Maintenance completion
+- Asset health
+- Downtime
+- Maintenance trends
+- Operational efficiency
+
+Use charts that match the visual language of the selected references.
+
+━━━━━━━━━━━━━━━━━━━━
+REALISTIC ENTERPRISE FEEL
+━━━━━━━━━━━━━━━━━━━━
+
+The application must NOT look like:
+
+- A student project
+- A basic CRUD application
+- A generic admin template
+- A generic AI dashboard
+- A simple prototype
+
+It should look like a real commercial railway operations SaaS platform.
+
+The goal is:
+
+"Someone should be able to see this UI and immediately believe RailZen AI is a serious railway technology product."
+
+━━━━━━━━━━━━━━━━━━━━
+FUNCTIONALITY
+━━━━━━━━━━━━━━━━━━━━
+
+Keep the existing backend, API connection and existing working functionality intact.
+
+Do not unnecessarily rebuild or duplicate backend functionality.
+
+Improve existing frontend components instead of creating duplicate versions.
+
+Make navigation functional where possible.
+
+Make cards, navigation, filters, dropdowns and major interactions behave realistically.
+
+Use demo data where real data is not yet available.
+
+━━━━━━━━━━━━━━━━━━━━
+RESPONSIVE DESIGN
+━━━━━━━━━━━━━━━━━━━━
+
+Desktop is the primary experience.
+
+Also ensure the interface adapts properly to tablet and mobile screens.
+
+The desktop version should receive the highest level of visual polish.
+
+━━━━━━━━━━━━━━━━━━━━
+FINAL QUALITY CHECK
+━━━━━━━━━━━━━━━━━━━━
+
+Do NOT stop after changing only colors.
+
+Complete the entire visible UI redesign.
+
+Check the running application visually after implementation.
+
+Fix:
+
+- spacing
+- alignment
+- typography
+- card sizing
+- sidebar proportions
+- responsiveness
+- contrast
+- visual hierarchy
+- inconsistent components
+- unfinished sections
+
+Everything visible to the user should feel intentional and production-ready.
+
+IMPORTANT FINAL RULE:
+
+This is the FINAL UI direction for RailZen AI.
+
+Do not introduce any P0/P0.1/P0.2/phase labels or development markers into the product.
+
+Those are only for our internal development workflow.
+
+Make the final application visually close to the selected Dribbble references while maintaining an original RailZen AI identity and railway-specific functionality.
+
+Finish the redesign completely before stopping.

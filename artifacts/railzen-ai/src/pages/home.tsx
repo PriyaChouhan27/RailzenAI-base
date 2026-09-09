@@ -4,11 +4,18 @@ import {
   AlertTriangle,
   ArrowDownRight,
   ArrowUpRight,
+  Bot,
+  BrainCircuit,
+  Building2,
   Bell,
   CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ChevronRight,
+  CircleDot,
   Clock3,
+  FileText,
+  Filter,
   Gauge,
   LayoutDashboard,
   LineChart,
@@ -53,6 +60,8 @@ const navigation: { label: string; icon: LucideIcon }[] = [
   { label: 'Assets', icon: TrainFront },
   { label: 'Alerts', icon: Siren },
   { label: 'Analytics', icon: LineChart },
+  { label: 'Reports', icon: FileText },
+  { label: 'AI Assistant', icon: Bot },
   { label: 'Settings', icon: Settings },
 ];
 
@@ -67,6 +76,19 @@ const alertData = [
   { id: 'AL-701', level: 'Critical', title: 'Turnout 14B exceeded inspection threshold', detail: 'Northline corridor · 12 minutes ago', color: 'critical' },
   { id: 'AL-698', level: 'Watch', title: 'Brake wear trend rising on fleet set 08', detail: 'Depot West · 47 minutes ago', color: 'watch' },
   { id: 'AL-694', level: 'Info', title: 'Night access window confirmed for East Junction', detail: 'Possession planning · 2 hours ago', color: 'info' },
+];
+
+const assetData = [
+  { id: 'TRK-N118', type: 'Track section', location: 'Northline · km 39.1', health: '96%', condition: 'Healthy', inspection: '07 Oct 2025', next: '21 Oct 2025', risk: 'Low' },
+  { id: 'SIG-14B', type: 'Signal', location: 'Northline · km 42.8', health: '68%', condition: 'Watch', inspection: '02 Oct 2025', next: 'Today', risk: 'High' },
+  { id: 'BRG-007', type: 'Bridge', location: 'East Junction · km 18.4', health: '82%', condition: 'Stable', inspection: '28 Sep 2025', next: '14 Oct 2025', risk: 'Medium' },
+  { id: 'CAT-C221', type: 'Electrical system', location: 'Coastal · km 77.2', health: '91%', condition: 'Healthy', inspection: '30 Sep 2025', next: '16 Oct 2025', risk: 'Low' },
+];
+
+const insightData = [
+  { title: 'Prioritize Signal 14B inspection', detail: 'Condition trend has crossed the review threshold. Review before the next Northline access window.', tag: 'Recommended action', icon: AlertTriangle, accent: 'orange' },
+  { title: 'Bundle two Northline work orders', detail: 'The 06:00 access window can cover relay replacement and point machine inspection in one possession.', tag: 'Planning opportunity', icon: CalendarClock, accent: 'slate' },
+  { title: 'East Junction remains stable', detail: 'Bridge 07 health is holding at 82% with no emerging network-wide impact detected.', tag: 'Network insight', icon: Building2, accent: 'blue' },
 ];
 
 function StatusDot({ state }: { state: ConnectionState }) {
@@ -97,13 +119,25 @@ function SkeletonLine({ className = '' }: { className?: string }) {
   return <div aria-hidden="true" className={`h-3 animate-pulse rounded bg-[hsl(var(--muted))] ${className}`} />;
 }
 
-function KpiCard({ icon: Icon, label, value, change, trend, note, accent = 'teal' }: { icon: LucideIcon; label: string; value: string; change: string; trend: 'up' | 'down'; note: string; accent?: 'teal' | 'amber' | 'red' }) {
+function RailzenMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={`railzen-mark flex items-center justify-center rounded-xl ${compact ? 'h-9 w-9' : 'h-10 w-10'}`} aria-label="RailZen AI">
+      <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none" aria-hidden="true">
+        <path d="M8 5v18M24 5v18M8 11h16M8 17h16M8 23h16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+        <circle cx="16" cy="5" r="2.4" fill="hsl(var(--accent))" stroke="currentColor" strokeWidth="1.4" />
+        <circle cx="16" cy="23" r="2.4" fill="hsl(var(--primary))" stroke="currentColor" strokeWidth="1.4" />
+      </svg>
+    </div>
+  );
+}
+
+function KpiCard({ icon: Icon, label, value, change, trend, note, accent = 'primary' }: { icon: LucideIcon; label: string; value: string; change: string; trend: 'up' | 'down'; note: string; accent?: 'primary' | 'amber' | 'red' }) {
   const color = accent === 'amber' ? 'text-[hsl(var(--accent))] bg-[hsl(var(--accent)/.12)]' : accent === 'red' ? 'text-[hsl(var(--destructive))] bg-[hsl(var(--destructive)/.12)]' : 'text-[hsl(var(--primary))] bg-[hsl(var(--primary)/.12)]';
   return (
     <article className="railzen-panel railzen-reveal railzen-card group p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className={`rounded-lg p-2 ${color}`}><Icon className="h-4 w-4" /></div>
-        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-1 font-mono text-[10px] ${trend === 'down' ? 'bg-[hsl(var(--accent)/.1)] text-[hsl(var(--accent))]' : 'bg-[hsl(var(--primary)/.1)] text-[hsl(var(--primary))]'}`}>
+         <span className={`inline-flex items-center gap-1 rounded-full px-2 py-1 font-mono text-[10px] ${trend === 'down' ? 'bg-[hsl(var(--accent)/.1)] text-[hsl(var(--accent))]' : 'bg-[hsl(var(--primary)/.1)] text-[hsl(var(--primary))]'}`}>
           {trend === 'down' ? <ArrowDownRight className="h-3 w-3" /> : <ArrowUpRight className="h-3 w-3" />}
           {change}
         </span>
@@ -139,9 +173,9 @@ function NetworkMap() {
       </div>
       <svg viewBox="0 0 800 340" className="absolute inset-x-0 bottom-0 h-[82%] w-full" role="img" aria-label="Schematic map of the Northline and East Junction rail corridors">
         <path d="M58 275 C150 235 145 160 240 150 S335 77 430 105 S520 200 610 145 S690 84 760 57" fill="none" stroke="hsl(215 23% 25%)" strokeWidth="16" strokeLinecap="round" />
-        <path d="M58 275 C150 235 145 160 240 150 S335 77 430 105 S520 200 610 145 S690 84 760 57" fill="none" stroke="hsl(173 45% 35%)" strokeWidth="2" strokeDasharray="8 5" />
+         <path d="M58 275 C150 235 145 160 240 150 S335 77 430 105 S520 200 610 145 S690 84 760 57" fill="none" stroke="hsl(24 88% 58%)" strokeWidth="2" strokeDasharray="8 5" />
         <path d="M174 308 C210 255 271 258 302 211 S394 161 447 193 S530 287 620 252" fill="none" stroke="hsl(215 23% 25%)" strokeWidth="12" strokeLinecap="round" />
-        <path d="M174 308 C210 255 271 258 302 211 S394 161 447 193 S530 287 620 252" fill="none" stroke="hsl(201 65% 55%)" strokeWidth="2" strokeDasharray="7 5" />
+         <path d="M174 308 C210 255 271 258 302 211 S394 161 447 193 S530 287 620 252" fill="none" stroke="hsl(214 30% 48%)" strokeWidth="2" strokeDasharray="7 5" />
         {[
           [58, 275, 'Central Yard', 'teal'], [147, 196, 'North Depot', 'teal'], [240, 150, 'N-118', 'teal'],
           [337, 91, 'Summit', 'amber'], [430, 105, '14B', 'red'], [523, 188, 'East Jct', 'teal'],
@@ -149,8 +183,8 @@ function NetworkMap() {
           [447, 193, 'C-221', 'teal'], [620, 252, 'West Loop', 'teal'],
         ].map(([x, y, label, color]) => (
           <g key={`${x}-${y}`} className="group">
-            <circle cx={x as number} cy={y as number} r="8" fill={color === 'red' ? 'hsl(8 70% 60%/.18)' : color === 'amber' ? 'hsl(35 77% 58%/.16)' : 'hsl(173 68% 46%/.14)'} />
-            <circle cx={x as number} cy={y as number} r="3.2" fill={color === 'red' ? 'hsl(8 70% 60%)' : color === 'amber' ? 'hsl(35 77% 58%)' : 'hsl(173 68% 46%)'} />
+             <circle cx={x as number} cy={y as number} r="8" fill={color === 'red' ? 'hsl(8 70% 60%/.18)' : color === 'amber' ? 'hsl(42 92% 61%/.16)' : 'hsl(24 88% 58%/.14)'} />
+             <circle cx={x as number} cy={y as number} r="3.2" fill={color === 'red' ? 'hsl(8 70% 60%)' : color === 'amber' ? 'hsl(42 92% 61%)' : 'hsl(24 88% 58%)'} />
             <text x={(x as number) + 10} y={(y as number) - 10} fill="hsl(214 14% 70%)" fontSize="10" fontFamily="DM Mono, monospace">{label}</text>
           </g>
         ))}
@@ -167,10 +201,13 @@ function Home() {
   const [noticeOpen, setNoticeOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [period, setPeriod] = useState('This month');
+  const [network, setNetwork] = useState('Northline Region');
+  const [query, setQuery] = useState('');
   const [showAllAlerts, setShowAllAlerts] = useState(false);
   const [dismissedAlerts, setDismissedAlerts] = useState<string[]>([]);
   const [selectedTask, setSelectedTask] = useState<MaintenanceTask | null>(null);
   const [scheduledTask, setScheduledTask] = useState<string[]>([]);
+  const [selectedInsight, setSelectedInsight] = useState<string | null>(null);
 
   const isLoading = railzen.isLoading || platform.isLoading;
   const isConnected = railzen.isSuccess && platform.isSuccess;
@@ -179,19 +216,32 @@ function Home() {
     void railzen.refetch();
     void platform.refetch();
   };
-  const visibleAlerts = alertData.filter((alert) => !dismissedAlerts.includes(alert.id)).slice(0, showAllAlerts ? 3 : 2);
+  const visibleAlerts = alertData.filter((alert) => !dismissedAlerts.includes(alert.id)).filter((alert) => !query || `${alert.title} ${alert.detail}`.toLowerCase().includes(query.toLowerCase())).slice(0, showAllAlerts ? 3 : 2);
+  const filteredTasks = tasks.filter((task) => !query || `${task.asset} ${task.corridor} ${task.work}`.toLowerCase().includes(query.toLowerCase()));
   const navTitle = activeNav === 'Overview' ? 'Network overview' : activeNav;
+  const navAnchors: Record<string, string> = {
+    Overview: 'overview-dashboard',
+    'Maintenance Planning': 'maintenance-plan',
+    Network: 'network-picture',
+    Assets: 'asset-overview',
+    Alerts: 'alert-queue',
+    Analytics: 'analytics-overview',
+    Reports: 'reports-overview',
+    'AI Assistant': 'ai-assistant',
+  };
 
   const handleNav = (label: string) => {
     setActiveNav(label);
     setMobileNavOpen(false);
+    const anchor = navAnchors[label];
+    if (anchor) window.setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
   };
 
   return (
     <main className="railzen-page flex min-h-[100dvh] bg-background">
       <aside className="hidden w-[246px] shrink-0 flex-col border-r border-[hsl(var(--sidebar-border))] bg-[hsl(var(--sidebar))] px-4 py-5 lg:flex">
         <div className="flex items-center gap-3 px-2">
-          <div className="railzen-mark flex h-9 w-9 items-center justify-center rounded-xl text-[hsl(var(--primary))]"><Route className="h-5 w-5" strokeWidth={2.5} /></div>
+          <RailzenMark compact />
           <div>
             <p className="font-display text-[15px] font-bold tracking-[-.035em] text-foreground">RailZen <span className="text-[hsl(var(--primary))]">AI</span></p>
             <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[.16em] text-muted-foreground">Control workspace</p>
@@ -200,7 +250,7 @@ function Home() {
         <div className="mt-9 px-2">
           <p className="font-mono text-[9px] uppercase tracking-[.18em] text-muted-foreground">Workspace</p>
           <button type="button" className="mt-2 flex w-full items-center justify-between rounded-lg border border-[hsl(var(--sidebar-border))] bg-[hsl(var(--sidebar-accent))] px-3 py-2.5 text-left hover:border-[hsl(var(--primary)/.45)]">
-            <span><span className="block text-xs font-semibold text-foreground">Northline Region</span><span className="mt-0.5 block font-mono text-[9px] text-muted-foreground">DEMO OPERATING AREA</span></span>
+            <span><span className="block text-xs font-semibold text-foreground">{network}</span><span className="mt-0.5 block font-mono text-[9px] text-muted-foreground">DEMO OPERATING AREA</span></span>
             <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
           </button>
         </div>
@@ -222,8 +272,8 @@ function Home() {
           <p className="mt-1 text-[10px] leading-4 text-muted-foreground">Not connected to a government or railway authority feed.</p>
         </div>
         <div className="mt-4 flex items-center gap-2 border-t border-[hsl(var(--sidebar-border))] px-2 pt-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--primary)/.16)] font-mono text-[10px] font-medium text-[hsl(var(--primary))]">AM</div>
-          <div className="min-w-0"><p className="truncate text-xs font-semibold text-foreground">Asha Menon</p><p className="truncate text-[10px] text-muted-foreground">Planning lead</p></div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--primary)/.16)] font-mono text-[10px] font-medium text-[hsl(var(--primary))]">OM</div>
+          <div className="min-w-0"><p className="truncate text-xs font-semibold text-foreground">Operations Manager</p><p className="truncate text-[10px] text-muted-foreground">Network control</p></div>
           <button type="button" className="ml-auto text-muted-foreground hover:text-foreground" aria-label="Open profile"><MoreHorizontal className="h-4 w-4" /></button>
         </div>
       </aside>
@@ -231,7 +281,7 @@ function Home() {
       {mobileNavOpen && (
         <div className="railzen-mobile-drawer fixed inset-0 z-40 bg-[hsl(var(--background)/.78)] backdrop-blur-sm lg:hidden" onClick={() => setMobileNavOpen(false)}>
           <aside className="flex h-full w-[min(82vw,290px)] flex-col border-r border-[hsl(var(--sidebar-border))] bg-[hsl(var(--sidebar))] px-4 py-5" onClick={(event) => event.stopPropagation()}>
-            <div className="flex items-center justify-between px-2"><div className="flex items-center gap-3"><div className="railzen-mark flex h-9 w-9 items-center justify-center rounded-xl text-[hsl(var(--primary))]"><Route className="h-5 w-5" /></div><p className="font-display text-[15px] font-bold text-foreground">RailZen <span className="text-[hsl(var(--primary))]">AI</span></p></div><button type="button" onClick={() => setMobileNavOpen(false)} aria-label="Close navigation"><X className="h-5 w-5 text-muted-foreground" /></button></div>
+             <div className="flex items-center justify-between px-2"><div className="flex items-center gap-3"><RailzenMark compact /><p className="font-display text-[15px] font-bold text-foreground">RailZen <span className="text-[hsl(var(--primary))]">AI</span></p></div><button type="button" onClick={() => setMobileNavOpen(false)} aria-label="Close navigation"><X className="h-5 w-5 text-muted-foreground" /></button></div>
             <nav className="mt-10 flex-1 space-y-1" aria-label="Mobile navigation">
               {navigation.map(({ label, icon: Icon }) => <button key={label} type="button" onClick={() => handleNav(label)} className={`railzen-nav-item flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-xs font-semibold ${activeNav === label ? 'is-active text-foreground' : 'text-muted-foreground'}`}><Icon className="h-4 w-4" />{label}</button>)}
             </nav>
@@ -247,21 +297,37 @@ function Home() {
             <div className="min-w-0"><div className="flex items-center gap-2"><span className="hidden font-mono text-[10px] uppercase tracking-[.16em] text-muted-foreground sm:inline">Control room</span><span className="hidden h-1 w-1 rounded-full bg-[hsl(var(--border))] sm:inline" /><h1 className="truncate font-display text-base font-bold tracking-[-.025em] text-foreground sm:text-lg">{navTitle}</h1></div><p data-testid="text-purpose" className="mt-1 hidden truncate text-[11px] text-muted-foreground sm:block">AI-Powered Railway Maintenance Planning &amp; Optimization</p></div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
+            <label className="hidden items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card)/.6)] px-3 py-2 lg:flex">
+              <Building2 className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+              <span className="sr-only">Railway region</span>
+              <select value={network} onChange={(event) => setNetwork(event.target.value)} className="appearance-none bg-transparent text-[11px] font-semibold text-foreground outline-none">
+                <option>Northline Region</option>
+                <option>East Junction</option>
+                <option>Coastal Corridor</option>
+              </select>
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </label>
+            <label className="hidden items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card)/.6)] px-3 py-2 md:flex">
+              <Search className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className="sr-only">Search workspace</span>
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search workspace" className="w-28 bg-transparent text-[11px] text-foreground outline-none placeholder:text-muted-foreground xl:w-40" />
+              {query && <button type="button" onClick={() => setQuery('')} aria-label="Clear search"><X className="h-3 w-3 text-muted-foreground" /></button>}
+            </label>
             <div className="hidden items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--card)/.6)] px-3 py-1.5 sm:flex"><StatusDot state={connectionState} /><span className="text-[11px] font-medium text-muted-foreground">{connectionState === 'connected' ? 'Services operational' : connectionState === 'loading' ? 'Checking services' : 'Services offline'}</span></div>
             <div className="relative">
               <button type="button" onClick={() => setNoticeOpen((open) => !open)} className="relative rounded-lg p-2 text-muted-foreground hover:bg-[hsl(var(--secondary))] hover:text-foreground" aria-label="View notifications"><Bell className="h-[18px] w-[18px]" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[hsl(var(--accent))]" /></button>
               {noticeOpen && <div className="railzen-popover absolute right-0 top-11 z-40 w-72 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--popover))] p-3 shadow-[var(--shadow-md)]"><div className="flex items-center justify-between border-b border-[hsl(var(--border))] pb-3"><p className="text-xs font-semibold text-foreground">Notifications</p><span className="font-mono text-[9px] text-[hsl(var(--accent))]">03 UNREAD</span></div><p className="py-4 text-xs leading-5 text-muted-foreground">Turnout 14B needs planner review before the 18:30 access window.</p><button type="button" onClick={() => setNoticeOpen(false)} className="text-[11px] font-semibold text-[hsl(var(--primary))]">Mark view complete</button></div>}
             </div>
             <div className="relative">
-              <button type="button" onClick={() => setProfileOpen((open) => !open)} className="flex items-center gap-2 rounded-lg p-1.5 pr-2 hover:bg-[hsl(var(--secondary))]" aria-label="Open user menu"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--primary)/.16)] font-mono text-[10px] font-medium text-[hsl(var(--primary))]">AM</span><span className="hidden text-left sm:block"><span className="block text-[11px] font-semibold text-foreground">Asha Menon</span><span className="block text-[9px] text-muted-foreground">Planner</span></span><ChevronDown className="hidden h-3.5 w-3.5 text-muted-foreground sm:block" /></button>
+              <button type="button" onClick={() => setProfileOpen((open) => !open)} className="flex items-center gap-2 rounded-lg p-1.5 pr-2 hover:bg-[hsl(var(--secondary))]" aria-label="Open user menu"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--primary)/.16)] font-mono text-[10px] font-medium text-[hsl(var(--primary))]">OM</span><span className="hidden text-left sm:block"><span className="block text-[11px] font-semibold text-foreground">Operations Manager</span><span className="block text-[9px] text-muted-foreground">Network control</span></span><ChevronDown className="hidden h-3.5 w-3.5 text-muted-foreground sm:block" /></button>
               {profileOpen && <div className="railzen-popover absolute right-0 top-12 z-40 w-44 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--popover))] p-1.5 shadow-[var(--shadow-md)]"><button type="button" onClick={() => { setActiveNav('Settings'); setProfileOpen(false); }} className="w-full rounded-lg px-3 py-2 text-left text-xs text-muted-foreground hover:bg-[hsl(var(--secondary))] hover:text-foreground">Workspace settings</button><button type="button" onClick={() => setProfileOpen(false)} className="w-full rounded-lg px-3 py-2 text-left text-xs text-muted-foreground hover:bg-[hsl(var(--secondary))] hover:text-foreground">Close menu</button></div>}
             </div>
           </div>
         </header>
 
-        <div className="mx-auto max-w-[1640px] px-4 py-6 sm:px-7 sm:py-8 lg:px-9">
+        <div id="overview-dashboard" className="mx-auto max-w-[1640px] px-4 py-6 sm:px-7 sm:py-8 lg:px-9">
           <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <div><div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" /><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[hsl(var(--primary))]">Tuesday · 14 October 2025</p></div><h2 className="mt-2 font-display text-2xl font-bold tracking-[-.045em] text-foreground sm:text-3xl">Good morning, Asha</h2><p className="mt-1 text-xs text-muted-foreground">Here is the operating picture for the Northline region.</p></div>
+            <div><div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" /><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[hsl(var(--primary))]">Tuesday · 14 October 2025</p></div><h2 className="mt-2 font-display text-2xl font-bold tracking-[-.045em] text-foreground sm:text-3xl">Good morning, operations team</h2><p className="mt-1 text-xs text-muted-foreground">Here is the operating picture for the {network.toLowerCase()} network.</p></div>
             <div className="flex items-center gap-2"><label className="relative"><span className="sr-only">Reporting period</span><select value={period} onChange={(event) => setPeriod(event.target.value)} className="h-9 appearance-none rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] py-0 pl-3 pr-8 text-xs font-medium text-foreground"><option>This month</option><option>Last 30 days</option><option>This quarter</option></select><ChevronDown className="pointer-events-none absolute right-2.5 top-3 h-3.5 w-3.5 text-muted-foreground" /></label><button type="button" onClick={() => document.getElementById('maintenance-plan')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex h-9 items-center gap-2 rounded-lg bg-[hsl(var(--primary))] px-3.5 text-xs font-bold text-[hsl(var(--primary-foreground))] transition-transform hover:-translate-y-0.5"><SlidersHorizontal className="h-3.5 w-3.5" /> Plan work</button></div>
           </div>
 
@@ -274,7 +340,7 @@ function Home() {
             <KpiCard icon={Gauge} label="Maintenance efficiency" value="91.3%" change="+4.1%" trend="up" note="planned hours recovered" />
           </section>
 
-          <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(285px,.55fr)]">
+          <section id="network-picture" className="mt-5 grid scroll-mt-24 gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(285px,.55fr)]">
             <article className="railzen-panel railzen-reveal railzen-reveal-delay-1 p-4 sm:p-5">
               <div className="mb-4 flex items-start justify-between gap-4"><div><div className="flex items-center gap-2"><MapPinned className="h-4 w-4 text-[hsl(var(--primary))]" /><h3 className="text-sm font-bold text-foreground">Network operating picture</h3><span className="rounded bg-[hsl(var(--primary)/.1)] px-1.5 py-0.5 font-mono text-[9px] text-[hsl(var(--primary))]">DEMO</span></div><p className="mt-1 pl-6 text-xs text-muted-foreground">Live-like schematic view of monitored routes and asset condition</p></div><button type="button" onClick={() => handleNav('Network')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[hsl(var(--primary))] hover:text-foreground">Open network <ArrowUpRight className="h-3 w-3" /></button></div>
               <NetworkMap />
@@ -288,7 +354,7 @@ function Home() {
             </article>
           </section>
 
-          <section className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)]">
+          <section id="analytics-overview" className="mt-5 grid scroll-mt-24 gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)]">
             <article className="railzen-panel railzen-reveal railzen-reveal-delay-2 p-4 sm:p-5">
               <div className="flex items-start justify-between"><div><div className="flex items-center gap-2"><h3 className="text-sm font-bold text-foreground">Maintenance throughput</h3><span className="rounded bg-[hsl(var(--secondary))] px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground">{period.toUpperCase()}</span></div><p className="mt-1 text-xs text-muted-foreground">Planned work compared with completed work orders</p></div><button type="button" onClick={() => handleNav('Analytics')} className="text-muted-foreground hover:text-foreground" aria-label="Open maintenance analytics"><MoreHorizontal className="h-4 w-4" /></button></div>
               <div className="mt-6 grid grid-cols-[1fr_auto] gap-6"><div className="flex h-[150px] items-end justify-between gap-2 border-b border-l border-[hsl(var(--border))] px-3 pb-0 pt-4">{[['Jun', 62, 45], ['Jul', 72, 58], ['Aug', 68, 61], ['Sep', 84, 70], ['Oct', 78, 64]].map(([month, planned, complete]) => <div key={month} className="flex h-full flex-1 items-end justify-center gap-1.5"><div className="w-3 rounded-t-sm bg-[hsl(var(--primary)/.3)]" style={{ height: `${planned as number}%` }} title={`${month} planned`} /><div className="w-3 rounded-t-sm bg-[hsl(var(--primary))]" style={{ height: `${complete as number}%` }} title={`${month} completed`} /></div>)}</div><div className="flex flex-col justify-center gap-4 text-[10px] text-muted-foreground"><span className="flex items-center gap-2"><i className="h-2 w-2 rounded-sm bg-[hsl(var(--primary)/.3)]" /> Planned</span><span className="flex items-center gap-2"><i className="h-2 w-2 rounded-sm bg-[hsl(var(--primary))]" /> Completed</span><strong className="font-display text-2xl text-foreground">82<span className="text-sm text-muted-foreground">%</span></strong><span>completion rate</span></div></div><div className="mt-2 flex justify-around pl-3 text-[10px] text-muted-foreground"><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span></div>
@@ -300,10 +366,10 @@ function Home() {
             </article>
           </section>
 
-          <section id="maintenance-plan" className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,.65fr)]">
+          <section id="maintenance-plan" className="mt-5 grid scroll-mt-24 gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,.65fr)]">
             <article className="railzen-panel railzen-reveal railzen-reveal-delay-3 overflow-hidden p-4 sm:p-5">
               <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center"><div><div className="flex items-center gap-2"><Wrench className="h-4 w-4 text-[hsl(var(--primary))]" /><h3 className="text-sm font-bold text-foreground">Maintenance tasks</h3><span className="rounded-full bg-[hsl(var(--secondary))] px-2 py-0.5 font-mono text-[9px] text-muted-foreground">18 OPEN</span></div><p className="mt-1 pl-6 text-xs text-muted-foreground">Prioritized work orders for the next access windows</p></div><button type="button" onClick={() => handleNav('Maintenance Planning')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[hsl(var(--primary))] hover:text-foreground">View maintenance plan <ArrowUpRight className="h-3 w-3" /></button></div>
-              <div className="mt-5 overflow-x-auto"><table className="w-full min-w-[650px] text-left"><thead><tr className="border-b border-[hsl(var(--border))] font-mono text-[9px] uppercase tracking-[.12em] text-muted-foreground"><th className="pb-3 pl-2 font-medium">Asset / corridor</th><th className="pb-3 font-medium">Work scope</th><th className="pb-3 font-medium">Due</th><th className="pb-3 font-medium">Priority</th><th className="pb-3 pr-2 text-right font-medium">Status</th></tr></thead><tbody>{tasks.map((task) => <tr key={task.id} className="border-b border-[hsl(var(--border)/.65)] last:border-0 hover:bg-[hsl(var(--secondary)/.35)]"><td className="py-3 pl-2"><button type="button" onClick={() => setSelectedTask(task)} className="text-left"><span className="block text-xs font-semibold text-foreground hover:text-[hsl(var(--primary))]">{task.asset}</span><span className="mt-1 block font-mono text-[10px] text-muted-foreground">{task.corridor}</span></button></td><td className="py-3 text-xs text-muted-foreground">{task.work}<span className="mt-1 block font-mono text-[9px] text-[hsl(var(--muted-foreground))]">{task.id}</span></td><td className="py-3 text-xs text-muted-foreground"><span className="flex items-center gap-1.5"><Clock3 className="h-3 w-3" />{task.due}</span></td><td className="py-3"><span className={`rounded-full px-2 py-1 text-[10px] font-semibold ${task.priority === 'High' ? 'bg-[hsl(var(--destructive)/.12)] text-[hsl(var(--destructive))]' : task.priority === 'Medium' ? 'bg-[hsl(var(--accent)/.12)] text-[hsl(var(--accent))]' : 'bg-[hsl(var(--primary)/.1)] text-[hsl(var(--primary))]'}`}>{task.priority}</span></td><td className="py-3 pr-2 text-right"><button type="button" onClick={() => setSelectedTask(task)} className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-muted-foreground hover:text-foreground"><span className={`h-1.5 w-1.5 rounded-full ${scheduledTask.includes(task.id) || task.status === 'Scheduled' ? 'bg-[hsl(var(--primary))]' : task.status === 'Ready' ? 'bg-[hsl(var(--chart-3))]' : 'bg-[hsl(var(--accent))]'}`} />{scheduledTask.includes(task.id) ? 'Scheduled' : task.status}</button></td></tr>)}</tbody></table></div>
+               <div className="mt-5 overflow-x-auto"><table className="w-full min-w-[650px] text-left"><thead><tr className="border-b border-[hsl(var(--border))] font-mono text-[9px] uppercase tracking-[.12em] text-muted-foreground"><th className="pb-3 pl-2 font-medium">Asset / corridor</th><th className="pb-3 font-medium">Work scope</th><th className="pb-3 font-medium">Due</th><th className="pb-3 font-medium">Priority</th><th className="pb-3 pr-2 text-right font-medium">Status</th></tr></thead><tbody>{filteredTasks.map((task) => <tr key={task.id} className="border-b border-[hsl(var(--border)/.65)] last:border-0 hover:bg-[hsl(var(--secondary)/.35)]"><td className="py-3 pl-2"><button type="button" onClick={() => setSelectedTask(task)} className="text-left"><span className="block text-xs font-semibold text-foreground hover:text-[hsl(var(--primary))]">{task.asset}</span><span className="mt-1 block font-mono text-[10px] text-muted-foreground">{task.corridor}</span></button></td><td className="py-3 text-xs text-muted-foreground">{task.work}<span className="mt-1 block font-mono text-[9px] text-[hsl(var(--muted-foreground))]">{task.id}</span></td><td className="py-3 text-xs text-muted-foreground"><span className="flex items-center gap-1.5"><Clock3 className="h-3 w-3" />{task.due}</span></td><td className="py-3"><span className={`rounded-full px-2 py-1 text-[10px] font-semibold ${task.priority === 'High' ? 'bg-[hsl(var(--destructive)/.12)] text-[hsl(var(--destructive))]' : task.priority === 'Medium' ? 'bg-[hsl(var(--accent)/.12)] text-[hsl(var(--accent))]' : 'bg-[hsl(var(--primary)/.1)] text-[hsl(var(--primary))]'}`}>{task.priority}</span></td><td className="py-3 pr-2 text-right"><button type="button" onClick={() => setSelectedTask(task)} className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-muted-foreground hover:text-foreground"><span className={`h-1.5 w-1.5 rounded-full ${scheduledTask.includes(task.id) || task.status === 'Scheduled' ? 'bg-[hsl(var(--primary))]' : task.status === 'Ready' ? 'bg-[hsl(var(--chart-3))]' : 'bg-[hsl(var(--accent))]'}`} />{scheduledTask.includes(task.id) ? 'Scheduled' : task.status}</button></td></tr>)}</tbody></table>{filteredTasks.length === 0 && <p className="py-8 text-center text-xs text-muted-foreground">No maintenance tasks match “{query}”.</p>}</div>
             </article>
             <article className="railzen-panel railzen-reveal railzen-reveal-delay-4 p-4 sm:p-5">
               <div className="flex items-start justify-between"><div><div className="flex items-center gap-2"><Siren className="h-4 w-4 text-[hsl(var(--destructive))]" /><h3 className="text-sm font-bold text-foreground">Priority alerts</h3></div><p className="mt-1 pl-6 text-xs text-muted-foreground">Signals requiring planner review</p></div><button type="button" onClick={() => setShowAllAlerts((show) => !show)} className="text-[11px] font-semibold text-[hsl(var(--primary))]">{showAllAlerts ? 'Collapse' : 'View all'}</button></div>
