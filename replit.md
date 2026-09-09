@@ -1,45 +1,64 @@
-# [Project name]
+# RailZen AI
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+RailZen AI is a future-ready foundation for an AI-assisted Railway Maintenance
+Block Planning & Optimization System. Phase 0.1 intentionally provides only the
+project shell, backend health check, SQLite setup, and modular boundaries.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/railzen-ai run dev` — run the React frontend
+- `pnpm --filter @workspace/api-server run dev` — run the shared API preview service
+- `uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000` — run the FastAPI foundation directly
+- `pnpm run typecheck` — full TypeScript typecheck
+- `pnpm --filter @workspace/api-spec run codegen` — regenerate API clients after OpenAPI changes
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React, TypeScript, Vite, Tailwind CSS
+- Backend foundation: Python, FastAPI, Pydantic-compatible project structure
+- Database foundation: SQLite via Python's standard library
+- Data foundation: JSON/JSONL/CSV-compatible synthetic demo data location
+- Workspace: pnpm monorepo with GitHub-ready ignore rules
 
-## Where things live
+## Project structure
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/railzen-ai/` — runnable React application
+- `artifacts/api-server/` — shared preview API adapter exposing the health contract
+- `backend/app/` — FastAPI application, SQLite configuration, and future module boundaries
+- `backend/app/data/` — documentation for future synthetic demo datasets
+- `lib/api-spec/` — OpenAPI source of truth
+- `lib/api-client-react/` and `lib/api-zod/` — generated API helpers
 
-## Architecture decisions
+## API health endpoint
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+`GET /api/health` returns:
 
-## Product
+```json
+{
+  "status": "ok",
+  "service": "RailZen AI",
+  "phase": "0.1"
+}
+```
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The FastAPI foundation also exposes `GET /api/healthz` for a minimal liveness
+check.
 
-## User preferences
+## Current development phase
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+**Phase 0.1 — Project Foundation.** The complete dashboard, scheduling engine,
+AI recommendations, conflict detection, dynamic re-planning, and advanced
+features are intentionally not implemented.
 
-## Gotchas
+This is a hackathon prototype using synthetic/demo data. It is not connected to
+live Indian Railways operational systems.
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+## Future development phases
 
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+1. Phase 0.2 — Frontend shell and navigation
+2. Phase 0.3 — Synthetic demo data
+3. Phase 0.4 — Backend railway domain features
+4. Phase 0.6 — Maintenance planning
+5. Phase 0.7 — Conflict and impact analysis
+6. Phase 0.8 — Dynamic re-planning
+7. Phase 0.9 — Recommendation engine

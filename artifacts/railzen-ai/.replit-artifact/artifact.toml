@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "RailZen AI"
+description = "A future-ready foundation for an AI-assisted railway maintenance block planning and optimization system, currently limited to the Phase 0.1 project shell and backend connectivity check."
+version = "1.0.0"
+id = "artifacts/railzen-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24727
+
+[services.development]
+run = "pnpm --filter @workspace/railzen-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/railzen-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/railzen-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24727"
+BASE_PATH = "/"

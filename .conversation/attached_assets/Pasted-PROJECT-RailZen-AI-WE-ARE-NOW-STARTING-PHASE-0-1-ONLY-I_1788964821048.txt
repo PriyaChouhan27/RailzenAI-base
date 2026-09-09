@@ -1,0 +1,403 @@
+PROJECT: RailZen AI
+
+WE ARE NOW STARTING PHASE 0.1 ONLY.
+
+IMPORTANT:
+Do NOT build the full RailZen AI application yet.
+Do NOT implement the scheduling engine, AI recommendations, conflict detection, dynamic re-planning, or advanced features yet.
+
+Your ONLY responsibility in this phase is to create a clean, stable, future-ready project foundation.
+
+==================================================
+1. PROJECT GOAL
+==================================================
+
+RailZen AI will eventually be an AI-assisted Railway Maintenance Block Planning and Optimization System.
+
+The future application will analyse railway train schedules and maintenance requirements, identify feasible maintenance windows, detect conflicts, analyse train impact, recommend the best maintenance block, provide alternatives, and support dynamic re-planning.
+
+For now, we are ONLY creating the foundation.
+
+==================================================
+2. TECHNOLOGY STACK
+==================================================
+
+Use:
+
+Frontend:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+Backend:
+- Python
+- FastAPI
+- Pydantic
+
+Database:
+- SQLite (prepare the structure, but do not overbuild the database yet)
+
+Data:
+- JSON/JSONL/CSV-compatible structure for future synthetic demo data
+
+Version control:
+- Git/GitHub compatible
+
+Do NOT add unnecessary frameworks or technologies.
+
+Do NOT require paid APIs.
+
+Do NOT require external AI APIs.
+
+==================================================
+3. PROJECT STRUCTURE
+==================================================
+
+Create a clean full-stack structure similar to:
+
+railzen-ai/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── layouts/
+│   │   ├── services/
+│   │   ├── data/
+│   │   ├── types/
+│   │   └── utils/
+│   ├── package.json
+│   └── ...
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   ├── engine/
+│   │   ├── data/
+│   │   └── main.py
+│   └── ...
+│
+├── documentation/
+│
+├── README.md
+└── .gitignore
+
+You may improve the exact structure if required by Replit, but maintain clear separation between frontend and backend.
+
+==================================================
+4. FRONTEND SETUP
+==================================================
+
+Set up:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+The frontend must start successfully.
+
+Create a basic application shell.
+
+For now, create only a simple placeholder page showing:
+
+RAILZEN AI
+
+"Railway Maintenance Block Planning & Optimization"
+
+Also display:
+
+"PRD 0 — Prototype"
+
+"Phase 0.1 — Project Foundation"
+
+Do NOT build the complete dashboard yet.
+
+==================================================
+5. BACKEND SETUP
+==================================================
+
+Create a FastAPI backend.
+
+The backend must start successfully.
+
+Create a basic health endpoint:
+
+GET /api/health
+
+It should return something similar to:
+
+{
+  "status": "ok",
+  "service": "RailZen AI",
+  "phase": "0.1"
+}
+
+Keep the backend modular so future endpoints can be added easily.
+
+==================================================
+6. FRONTEND-BACKEND CONNECTION
+==================================================
+
+Create the basic mechanism for the React frontend to communicate with the FastAPI backend.
+
+The frontend should have a simple test that can call:
+
+GET /api/health
+
+and display:
+
+Backend Status: Connected
+
+or
+
+Backend Status: Not Connected
+
+Do not create complicated API infrastructure.
+
+Just establish a clean foundation that we can expand later.
+
+==================================================
+7. DATABASE FOUNDATION
+==================================================
+
+Prepare SQLite support.
+
+Create the basic database configuration/module.
+
+Do NOT create the complete railway database yet.
+
+Do NOT populate large datasets.
+
+The future database will contain entities such as:
+
+- trains
+- stations
+- railway sections
+- train timings
+- maintenance requests
+- maintenance blocks
+- restrictions
+
+For now, only prepare the structure required to add these later.
+
+==================================================
+8. DATA FOUNDATION
+==================================================
+
+Create a clean location for future synthetic demo data.
+
+For example:
+
+backend/app/data/
+
+or another appropriate structure.
+
+Create placeholder documentation explaining that future demo datasets will include:
+
+TRAIN DATA
+- train number
+- train type
+- origin
+- destination
+- section
+- arrival time
+- departure time
+- running time
+- service days
+
+SECTION DATA
+- section
+- stations
+- distance
+- line type
+- traction
+- capacity
+
+MAINTENANCE DATA
+- maintenance type
+- required duration
+- priority
+- preferred time
+
+BLOCK DATA
+- section
+- start time
+- end time
+- block type
+- status
+
+Do NOT create the actual large dataset in Phase 0.1.
+
+==================================================
+9. FUTURE MODULE PLACEHOLDERS
+==================================================
+
+Create clean module boundaries for future development.
+
+The following modules should have an appropriate place in the architecture:
+
+- timetable processing
+- railway section management
+- maintenance planning
+- constraint checking
+- conflict detection
+- scheduling
+- optimization
+- recommendation
+- impact/repercussion analysis
+- dynamic re-planning
+- what-if simulation
+- officer approval workflow
+
+Do NOT implement their logic now.
+
+The purpose is to make future phases easy to integrate.
+
+==================================================
+10. CONFIGURATION
+==================================================
+
+Create appropriate configuration/environment handling.
+
+Do not hard-code sensitive configuration.
+
+Prepare a safe structure for future:
+
+- backend URL
+- database path
+- API configuration
+
+Do NOT add API keys.
+
+==================================================
+11. ERROR HANDLING
+==================================================
+
+Set up basic error handling.
+
+The application should not crash because the backend is temporarily unavailable.
+
+The frontend should show a clear connection status.
+
+The backend should return useful HTTP errors.
+
+==================================================
+12. DOCUMENTATION
+==================================================
+
+Create a README.md containing:
+
+1. Project name
+2. Project purpose
+3. Technology stack
+4. Project structure
+5. How to run frontend
+6. How to run backend
+7. API health endpoint
+8. Current development phase
+9. Future development phases
+
+Clearly state:
+
+"This is a hackathon prototype using synthetic/demo data. It is not connected to live Indian Railways operational systems."
+
+==================================================
+13. DEVELOPMENT QUALITY
+==================================================
+
+Follow these principles:
+
+- clean code
+- modular structure
+- readable naming
+- reusable components
+- minimal dependencies
+- clear separation of concerns
+- future extensibility
+
+Do not over-engineer.
+
+Do not create unnecessary microservices.
+
+Do not implement fake AI.
+
+Do not create fake railway APIs.
+
+==================================================
+14. GITHUB READINESS
+==================================================
+
+Make the project GitHub-ready.
+
+Create an appropriate .gitignore.
+
+Do not include:
+
+- secrets
+- API keys
+- node_modules
+- Python virtual environments
+- generated build files
+- unnecessary temporary files
+
+If Git is available in the Replit environment, initialize the repository.
+
+Do NOT push anything to a remote GitHub repository unless explicitly instructed by us.
+
+==================================================
+15. TESTING REQUIREMENTS
+==================================================
+
+Before finishing Phase 0.1:
+
+1. Start the frontend.
+2. Start the backend.
+3. Verify the frontend loads.
+4. Verify /api/health works.
+5. Verify frontend can communicate with backend.
+6. Check for obvious console/build errors.
+7. Fix any errors caused by your implementation.
+
+==================================================
+16. VERY IMPORTANT SCOPE RULE
+==================================================
+
+STOP after Phase 0.1.
+
+Do NOT automatically proceed to:
+
+- Phase 0.2 Frontend
+- Phase 0.3 Demo Data
+- Phase 0.4 Backend Features
+- Phase 0.6 Maintenance Planning
+- Phase 0.7 Conflict Analysis
+- Phase 0.8 Dynamic Re-planning
+- Phase 0.9 Recommendation Engine
+
+We will give you those instructions separately.
+
+==================================================
+17. FINAL REPORT
+==================================================
+
+After completing Phase 0.1, report:
+
+1. Files/folders created
+2. Technologies installed
+3. Frontend status
+4. Backend status
+5. Database foundation status
+6. Frontend-backend connection status
+7. Tests performed
+8. Any errors encountered and fixed
+9. Exact commands needed to run the project
+10. What should be built in Phase 0.2
+
+Do not modify the scope beyond Phase 0.1.
+
+START PHASE 0.1 NOW.

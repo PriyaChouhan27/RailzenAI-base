@@ -11,6 +11,19 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /health:
+    get:
+      operationId: railzenHealth
+      tags: [health]
+      summary: RailZen AI health check
+      description: Returns the current RailZen AI foundation service status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RailZenHealthStatus"
   /healthz:
     get:
       operationId: healthCheck
@@ -26,6 +39,19 @@ paths:
                 $ref: "#/components/schemas/HealthStatus"
 components:
   schemas:
+    RailZenHealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+        service:
+          type: string
+        phase:
+          type: string
+      required:
+        - status
+        - service
+        - phase
     HealthStatus:
       type: object
       properties:

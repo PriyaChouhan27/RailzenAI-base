@@ -1,0 +1,1 @@
+"""Persistence model boundary for future domain entities."""
