@@ -1,0 +1,165 @@
+RAILZEN AI — UI REDESIGN INSTRUCTION
+
+We are continuing the existing RailZen AI project.
+
+IMPORTANT:
+This is a UI/UX redesign task only. Do NOT rebuild the backend, database, API architecture, or existing functionality unless absolutely necessary for the UI to work.
+
+PRIMARY DESIGN REFERENCE:
+Use the railway operations dashboard reference image I have provided as the PRIMARY visual inspiration.
+
+The reference represents the visual direction we want:
+- premium railway operations/control-room interface
+- dark, sophisticated professional dashboard
+- information-dense but clean layout
+- large operational visualization area
+- KPI cards
+- charts and analytics
+- railway/network/map-oriented visual language
+- clear status indicators
+- professional B2B enterprise software appearance
+
+Do NOT copy the reference design exactly.
+Create an ORIGINAL RailZen AI interface inspired by its visual language and information hierarchy.
+
+PRODUCT:
+RailZen AI
+AI-powered Railway Maintenance Planning & Optimization
+
+DESIGN GOAL:
+The application must look like a serious railway operations product that could realistically be presented to railway authorities, maintenance planners, and operations teams.
+
+REMOVE ALL INTERNAL DEVELOPMENT LABELS FROM THE USER INTERFACE.
+
+NEVER DISPLAY:
+- PRD 0
+- PRD 0.1
+- Prototype 0
+- Phase 0.1
+- Foundation
+- Foundation Monitor
+- 01/01
+- prototype numbers
+- development phases
+- internal implementation terminology
+
+Those terms are ONLY for our internal development process and must never be visible to users or judges.
+
+BRANDING:
+Use:
+RailZen AI
+
+Subtitle:
+AI-Powered Railway Maintenance Planning & Optimization
+
+Create a strong, professional RailZen AI brand identity.
+
+VISUAL STYLE:
+- dark premium enterprise dashboard
+- deep charcoal/navy background
+- subtle panels and borders
+- restrained teal/cyan accent
+- limited orange/amber for warnings
+- excellent contrast
+- modern typography
+- clean spacing
+- rounded but not excessively rounded cards
+- subtle shadows/glows only where appropriate
+- professional data visualization
+- avoid excessive gradients
+- avoid childish/consumer-app styling
+- avoid excessive animations
+- avoid excessive empty space
+
+LAYOUT:
+Create a professional desktop-first operations dashboard.
+
+Suggested structure:
+
+1. LEFT SIDEBAR
+   - RailZen AI logo
+   - Overview
+   - Maintenance Planning
+   - Network
+   - Assets
+   - Alerts
+   - Analytics
+   - Settings
+
+2. TOP BAR
+   - page title
+   - current operational status
+   - notification indicator
+   - user/profile area
+
+3. MAIN DASHBOARD
+   Include visually strong operational KPIs such as:
+   - Network Health
+   - Active Maintenance Tasks
+   - Critical Alerts
+   - Assets at Risk
+   - Planned vs Completed Work
+   - Maintenance Efficiency
+
+4. CENTRAL OPERATIONAL VISUALIZATION
+   Create a prominent railway/network visualization area.
+   It should visually communicate railway sections, assets, maintenance locations, and status.
+
+5. MAINTENANCE SECTION
+   Show realistic maintenance tasks with:
+   - asset/section
+   - priority
+   - risk/status
+   - scheduled time
+   - estimated duration
+   - current state
+
+6. ALERTS
+   Display critical/high/medium priority operational alerts using restrained visual indicators.
+
+7. ANALYTICS
+   Include useful charts such as:
+   - maintenance workload
+   - asset health
+   - completed vs pending work
+   - risk trend
+
+DATA:
+Use realistic DEMO railway data for now.
+Do not claim that the demo data is live government/railway data.
+Clearly structure the application so real APIs/data sources can be connected later.
+
+IMPORTANT UX PRINCIPLE:
+The dashboard should immediately communicate:
+"What is happening on the railway network?"
+"What needs maintenance?"
+"What is urgent?"
+"What should the planner do next?"
+
+RESPONSIVENESS:
+Make the interface responsive.
+Desktop is the primary target, but tablet/mobile layouts should remain usable.
+
+IMPLEMENTATION:
+Preserve the existing project architecture wherever possible.
+Reuse existing components when appropriate.
+Do not unnecessarily add dependencies.
+Keep the code modular and easy for us to extend in future phases.
+
+QUALITY CHECK:
+Before finishing:
+- remove the old Foundation Monitor appearance
+- remove all PRD/prototype/phase labels from the UI
+- ensure RailZen AI branding is consistent
+- check spacing, typography and alignment
+- ensure all dashboard cards look polished
+- ensure charts and status indicators look professional
+- ensure the page feels like one coherent enterprise product
+- ensure there are no placeholder-looking sections
+- ensure there are no obvious broken elements
+
+Do not add new advanced AI functionality yet.
+Do not add fake "AI" claims.
+Focus on making the existing RailZen AI foundation look like a polished professional product.
+
+After completing the redesign, run the application and verify the entire UI visually.
