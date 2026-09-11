@@ -10,6 +10,12 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: trains
+    description: Train timetable operations
+  - name: sections
+    description: Railway section operations
+  - name: maintenance
+    description: Maintenance request and block operations
 paths:
   /health:
     get:
@@ -37,6 +43,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /trains:
+    get:
+      operationId: listTrains
+      tags: [trains]
+      summary: List trains
+      description: Returns the synthetic demo train timetable
+      responses:
+        "200":
+          description: Trains retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Train"
+  /sections:
+    get:
+      operationId: listSections
+      tags: [sections]
+      summary: List railway sections
+      description: Returns the synthetic demo railway section reference data
+      responses:
+        "200":
+          description: Sections retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Section"
+  /maintenance-requests:
+    get:
+      operationId: listMaintenanceRequests
+      tags: [maintenance]
+      summary: List maintenance requests
+      description: Returns synthetic demo maintenance requests
+      responses:
+        "200":
+          description: Maintenance requests retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MaintenanceRequest"
+  /maintenance-blocks:
+    get:
+      operationId: listMaintenanceBlocks
+      tags: [maintenance]
+      summary: List maintenance blocks
+      description: Returns synthetic demo maintenance block data
+      responses:
+        "200":
+          description: Maintenance blocks retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MaintenanceBlock"
 components:
   schemas:
     RailZenHealthStatus:
@@ -59,4 +125,114 @@ components:
           type: string
       required:
         - status
-
+    Train:
+      type: object
+      description: A synthetic demo timetable entry for one train
+      properties:
+        trainNumber:
+          type: string
+        trainType:
+          type: string
+        origin:
+          type: string
+        destination:
+          type: string
+        section:
+          type: string
+          description: Name of the Section this train runs on
+        arrivalTime:
+          type: string
+          description: Local arrival time, HH:MM
+        departureTime:
+          type: string
+          description: Local departure time, HH:MM
+        runningTimeMinutes:
+          type: integer
+        serviceDays:
+          type: array
+          items:
+            type: string
+      required:
+        - trainNumber
+        - trainType
+        - origin
+        - destination
+        - section
+        - arrivalTime
+        - departureTime
+        - runningTimeMinutes
+        - serviceDays
+    Section:
+      type: object
+      description: A synthetic demo railway section reference record
+      properties:
+        name:
+          type: string
+        stations:
+          type: array
+          items:
+            type: string
+        distanceKm:
+          type: number
+        lineType:
+          type: string
+        traction:
+          type: string
+        capacity:
+          type: integer
+      required:
+        - name
+        - stations
+        - distanceKm
+        - lineType
+        - traction
+        - capacity
+    MaintenanceRequest:
+      type: object
+      description: A synthetic demo maintenance request awaiting scheduling
+      properties:
+        id:
+          type: string
+        maintenanceType:
+          type: string
+        requiredDurationMinutes:
+          type: integer
+        priority:
+          type: string
+          enum: [High, Medium, Low]
+        preferredTime:
+          type: string
+          description: Local preferred start time, HH:MM
+      required:
+        - id
+        - maintenanceType
+        - requiredDurationMinutes
+        - priority
+        - preferredTime
+    MaintenanceBlock:
+      type: object
+      description: A synthetic demo maintenance block (a possession window on a section)
+      properties:
+        id:
+          type: string
+        section:
+          type: string
+          description: Name of the Section this block applies to
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        blockType:
+          type: string
+        status:
+          type: string
+          enum: [Planned, Active, Completed, Cancelled]
+      required:
+        - id
+        - section
+        - startTime
+        - endTime
+        - blockType
+        - status

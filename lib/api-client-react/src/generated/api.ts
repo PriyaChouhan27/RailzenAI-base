@@ -17,7 +17,11 @@ import type {
 
 import type {
   HealthStatus,
-  RailZenHealthStatus
+  MaintenanceBlock,
+  MaintenanceRequest,
+  RailZenHealthStatus,
+  Section,
+  Train
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -191,6 +195,318 @@ export function useHealthCheck<TData = Awaited<ReturnType<typeof healthCheck>>, 
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getHealthCheckQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getListTrainsUrl = () => {
+
+
+
+
+  return `/api/trains`
+}
+
+/**
+ * Returns the synthetic demo train timetable
+ * @summary List trains
+ */
+export const listTrains = async ( options?: Parameters<typeof customFetch>[1]): Promise<Train[]> => {
+
+  return customFetch<Train[]>(getListTrainsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListTrainsQueryKey = () => {
+    return [
+    `/api/trains`
+    ] as const;
+    }
+
+
+export const getListTrainsQueryOptions = <TData = Awaited<ReturnType<typeof listTrains>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listTrains>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListTrainsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listTrains>>> = ({ signal }) => listTrains({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listTrains>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListTrainsQueryResult = NonNullable<Awaited<ReturnType<typeof listTrains>>>
+export type ListTrainsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List trains
+ */
+
+export function useListTrains<TData = Awaited<ReturnType<typeof listTrains>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listTrains>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListTrainsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getListSectionsUrl = () => {
+
+
+
+
+  return `/api/sections`
+}
+
+/**
+ * Returns the synthetic demo railway section reference data
+ * @summary List railway sections
+ */
+export const listSections = async ( options?: Parameters<typeof customFetch>[1]): Promise<Section[]> => {
+
+  return customFetch<Section[]>(getListSectionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListSectionsQueryKey = () => {
+    return [
+    `/api/sections`
+    ] as const;
+    }
+
+
+export const getListSectionsQueryOptions = <TData = Awaited<ReturnType<typeof listSections>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listSections>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListSectionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listSections>>> = ({ signal }) => listSections({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listSections>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListSectionsQueryResult = NonNullable<Awaited<ReturnType<typeof listSections>>>
+export type ListSectionsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List railway sections
+ */
+
+export function useListSections<TData = Awaited<ReturnType<typeof listSections>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listSections>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListSectionsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getListMaintenanceRequestsUrl = () => {
+
+
+
+
+  return `/api/maintenance-requests`
+}
+
+/**
+ * Returns synthetic demo maintenance requests
+ * @summary List maintenance requests
+ */
+export const listMaintenanceRequests = async ( options?: Parameters<typeof customFetch>[1]): Promise<MaintenanceRequest[]> => {
+
+  return customFetch<MaintenanceRequest[]>(getListMaintenanceRequestsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListMaintenanceRequestsQueryKey = () => {
+    return [
+    `/api/maintenance-requests`
+    ] as const;
+    }
+
+
+export const getListMaintenanceRequestsQueryOptions = <TData = Awaited<ReturnType<typeof listMaintenanceRequests>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listMaintenanceRequests>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListMaintenanceRequestsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listMaintenanceRequests>>> = ({ signal }) => listMaintenanceRequests({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listMaintenanceRequests>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListMaintenanceRequestsQueryResult = NonNullable<Awaited<ReturnType<typeof listMaintenanceRequests>>>
+export type ListMaintenanceRequestsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List maintenance requests
+ */
+
+export function useListMaintenanceRequests<TData = Awaited<ReturnType<typeof listMaintenanceRequests>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listMaintenanceRequests>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListMaintenanceRequestsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getListMaintenanceBlocksUrl = () => {
+
+
+
+
+  return `/api/maintenance-blocks`
+}
+
+/**
+ * Returns synthetic demo maintenance block data
+ * @summary List maintenance blocks
+ */
+export const listMaintenanceBlocks = async ( options?: Parameters<typeof customFetch>[1]): Promise<MaintenanceBlock[]> => {
+
+  return customFetch<MaintenanceBlock[]>(getListMaintenanceBlocksUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListMaintenanceBlocksQueryKey = () => {
+    return [
+    `/api/maintenance-blocks`
+    ] as const;
+    }
+
+
+export const getListMaintenanceBlocksQueryOptions = <TData = Awaited<ReturnType<typeof listMaintenanceBlocks>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listMaintenanceBlocks>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListMaintenanceBlocksQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listMaintenanceBlocks>>> = ({ signal }) => listMaintenanceBlocks({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listMaintenanceBlocks>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListMaintenanceBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof listMaintenanceBlocks>>>
+export type ListMaintenanceBlocksQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List maintenance blocks
+ */
+
+export function useListMaintenanceBlocks<TData = Awaited<ReturnType<typeof listMaintenanceBlocks>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listMaintenanceBlocks>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListMaintenanceBlocksQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
