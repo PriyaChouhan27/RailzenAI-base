@@ -1,0 +1,44 @@
+[
+  {
+    "id": "AST-001",
+    "assetType": "track",
+    "name": "Main Line Track - HYD-NGP",
+    "section": "HYD-NGP",
+    "status": "operational"
+  },
+  {
+    "id": "AST-002",
+    "assetType": "signal",
+    "name": "Signal System - HYD-NGP",
+    "section": "HYD-NGP",
+    "status": "operational"
+  },
+  {
+    "id": "AST-003",
+    "assetType": "track",
+    "name": "Main Line Track - SC-VSKP",
+    "section": "SC-VSKP",
+    "status": "operational"
+  },
+  {
+    "id": "AST-004",
+    "assetType": "signal",
+    "name": "Signal System - SC-VSKP",
+    "section": "SC-VSKP",
+    "status": "maintenance_due"
+  },
+  {
+    "id": "AST-005",
+    "assetType": "track",
+    "name": "Main Line Track - MMR-HYD",
+    "section": "MMR-HYD",
+    "status": "operational"
+  },
+  {
+    "id": "AST-006",
+    "assetType": "bridge",
+    "name": "Rail Bridge - MMR-HYD",
+    "section": "MMR-HYD",
+    "status": "inspection_due"
+  }
+]

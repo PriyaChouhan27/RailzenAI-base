@@ -1,0 +1,42 @@
+[
+  {
+    "id": "MB001",
+    "section": "HYD-NGP",
+    "startTime": "2026-09-12T01:00:00",
+    "endTime": "2026-09-12T02:30:00",
+    "blockType": "Track Maintenance",
+    "status": "Planned"
+  },
+  {
+    "id": "MB002",
+    "section": "SC-VSKP",
+    "startTime": "2026-09-12T02:00:00",
+    "endTime": "2026-09-12T04:00:00",
+    "blockType": "Signal Maintenance",
+    "status": "Planned"
+  },
+  {
+    "id": "MB003",
+    "section": "MMR-HYD",
+    "startTime": "2026-09-12T00:30:00",
+    "endTime": "2026-09-12T03:00:00",
+    "blockType": "OHE Maintenance",
+    "status": "Planned"
+  },
+  {
+    "id": "MB004",
+    "section": "HYD-NGP",
+    "startTime": "2026-09-13T02:30:00",
+    "endTime": "2026-09-13T04:00:00",
+    "blockType": "Track Inspection",
+    "status": "Completed"
+  },
+  {
+    "id": "MB005",
+    "section": "SC-VSKP",
+    "startTime": "2026-09-13T01:00:00",
+    "endTime": "2026-09-13T02:30:00",
+    "blockType": "Bridge Inspection",
+    "status": "Planned"
+  }
+]

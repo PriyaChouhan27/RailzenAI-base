@@ -1,0 +1,26 @@
+[
+  {
+    "name": "HYD-NGP",
+    "stations": ["Hyderabad", "Kazipet", "Warangal", "Vijayawada", "Nagpur"],
+    "distanceKm": 578.0,
+    "lineType": "Double",
+    "traction": "Electric",
+    "capacity": 42
+  },
+  {
+    "name": "SC-VSKP",
+    "stations": ["Secunderabad", "Kazipet", "Vijayawada", "Rajahmundry", "Visakhapatnam"],
+    "distanceKm": 705.0,
+    "lineType": "Double",
+    "traction": "Electric",
+    "capacity": 38
+  },
+  {
+    "name": "MMR-HYD",
+    "stations": ["Mumbai", "Pune", "Solapur", "Kalaburagi", "Hyderabad"],
+    "distanceKm": 710.0,
+    "lineType": "Double",
+    "traction": "Electric",
+    "capacity": 40
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "trainNumber": "12723",
+    "trainType": "Express",
+    "origin": "Hyderabad",
+    "destination": "New Delhi",
+    "section": "HYD-NGP",
+    "arrivalTime": "06:30",
+    "departureTime": "06:35",
+    "runningTimeMinutes": 780,
+    "serviceDays": ["Monday", "Wednesday", "Friday", "Sunday"]
+  },
+  {
+    "trainNumber": "12724",
+    "trainType": "Express",
+    "origin": "New Delhi",
+    "destination": "Hyderabad",
+    "section": "HYD-NGP",
+    "arrivalTime": "18:20",
+    "departureTime": "18:25",
+    "runningTimeMinutes": 780,
+    "serviceDays": ["Tuesday", "Thursday", "Saturday", "Sunday"]
+  },
+  {
+    "trainNumber": "17015",
+    "trainType": "Express",
+    "origin": "Secunderabad",
+    "destination": "Bhubaneswar",
+    "section": "SC-VSKP",
+    "arrivalTime": "09:10",
+    "departureTime": "09:15",
+    "runningTimeMinutes": 840,
+    "serviceDays": ["Monday", "Tuesday", "Thursday", "Saturday"]
+  },
+  {
+    "trainNumber": "17016",
+    "trainType": "Express",
+    "origin": "Bhubaneswar",
+    "destination": "Secunderabad",
+    "section": "SC-VSKP",
+    "arrivalTime": "20:40",
+    "departureTime": "20:45",
+    "runningTimeMinutes": 840,
+    "serviceDays": ["Monday", "Wednesday", "Friday", "Sunday"]
+  },
+  {
+    "trainNumber": "12701",
+    "trainType": "Superfast",
+    "origin": "Mumbai",
+    "destination": "Hyderabad",
+    "section": "MMR-HYD",
+    "arrivalTime": "05:50",
+    "departureTime": "05:55",
+    "runningTimeMinutes": 720,
+    "serviceDays": ["Monday", "Wednesday", "Friday", "Sunday"]
+  }
+]
+
