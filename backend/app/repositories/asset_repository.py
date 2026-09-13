@@ -1,3 +1,4 @@
+
 from backend.app.database import get_connection
 
 
@@ -12,7 +13,8 @@ def get_all_assets():
                 assets.asset_type,
                 assets.name,
                 sections.name AS section,
-                assets.status
+                assets.status,
+                assets.criticality
             FROM assets
             LEFT JOIN sections
                 ON assets.section_id = sections.id
@@ -34,7 +36,8 @@ def get_asset_by_id(asset_id: str):
                 assets.asset_type,
                 assets.name,
                 sections.name AS section,
-                assets.status
+                assets.status,
+                assets.criticality
             FROM assets
             LEFT JOIN sections
                 ON assets.section_id = sections.id
@@ -52,6 +55,7 @@ def create_asset(
     name: str,
     section_id: int | None,
     status: str,
+    criticality: int = 3,
 ):
     """Create an asset and return the stored record."""
 
@@ -63,9 +67,10 @@ def create_asset(
                 asset_type,
                 name,
                 section_id,
-                status
+                status,
+                criticality
             )
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?)
             """,
             (
                 asset_id,
@@ -73,6 +78,7 @@ def create_asset(
                 name,
                 section_id,
                 status,
+                criticality,
             ),
         )
 
@@ -83,7 +89,8 @@ def create_asset(
                 assets.asset_type,
                 assets.name,
                 sections.name AS section,
-                assets.status
+                assets.status,
+                assets.criticality
             FROM assets
             LEFT JOIN sections
                 ON assets.section_id = sections.id
@@ -93,3 +100,4 @@ def create_asset(
         ).fetchone()
 
     return dict(row)
+

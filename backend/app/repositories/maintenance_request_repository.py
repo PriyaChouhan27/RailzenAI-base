@@ -1,3 +1,4 @@
+
 from backend.app.database import get_connection
 
 
@@ -13,6 +14,10 @@ def _format_maintenance_request(row):
         "priority": request["priority"],
         "preferredTime": request["preferred_time"],
         "section": request["section"],
+        "severity": request["severity"],
+        "overdueDays": request["overdue_days"],
+        "assetId": request["asset_id"],
+        "assetCriticality": request["asset_criticality"],
     }
 
 
@@ -28,10 +33,16 @@ def get_all_maintenance_requests():
                 maintenance_requests.required_duration_minutes,
                 maintenance_requests.priority,
                 maintenance_requests.preferred_time,
-                sections.name AS section
+                sections.name AS section,
+                maintenance_requests.severity,
+                maintenance_requests.overdue_days,
+                maintenance_requests.asset_id,
+                assets.criticality AS asset_criticality
             FROM maintenance_requests
             LEFT JOIN sections
                 ON maintenance_requests.section_id = sections.id
+            LEFT JOIN assets
+                ON maintenance_requests.asset_id = assets.id
             ORDER BY maintenance_requests.id
             """
         ).fetchall()
@@ -51,10 +62,16 @@ def get_maintenance_request_by_id(request_id: str):
                 maintenance_requests.required_duration_minutes,
                 maintenance_requests.priority,
                 maintenance_requests.preferred_time,
-                sections.name AS section
+                sections.name AS section,
+                maintenance_requests.severity,
+                maintenance_requests.overdue_days,
+                maintenance_requests.asset_id,
+                assets.criticality AS asset_criticality
             FROM maintenance_requests
             LEFT JOIN sections
                 ON maintenance_requests.section_id = sections.id
+            LEFT JOIN assets
+                ON maintenance_requests.asset_id = assets.id
             WHERE maintenance_requests.id = ?
             """,
             (request_id,),
@@ -70,6 +87,9 @@ def create_maintenance_request(
     priority,
     preferred_time,
     section_id,
+    severity=3,
+    overdue_days=0,
+    asset_id=None,
 ):
     """Create a new maintenance request."""
 
@@ -82,9 +102,12 @@ def create_maintenance_request(
                 required_duration_minutes,
                 priority,
                 preferred_time,
-                section_id
+                section_id,
+                severity,
+                overdue_days,
+                asset_id
             )
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 request_id,
@@ -93,6 +116,9 @@ def create_maintenance_request(
                 priority,
                 preferred_time,
                 section_id,
+                severity,
+                overdue_days,
+                asset_id,
             ),
         )
 
@@ -104,13 +130,20 @@ def create_maintenance_request(
                 maintenance_requests.required_duration_minutes,
                 maintenance_requests.priority,
                 maintenance_requests.preferred_time,
-                sections.name AS section
+                sections.name AS section,
+                maintenance_requests.severity,
+                maintenance_requests.overdue_days,
+                maintenance_requests.asset_id,
+                assets.criticality AS asset_criticality
             FROM maintenance_requests
             LEFT JOIN sections
                 ON maintenance_requests.section_id = sections.id
+            LEFT JOIN assets
+                ON maintenance_requests.asset_id = assets.id
             WHERE maintenance_requests.id = ?
             """,
             (request_id,),
         ).fetchone()
 
     return _format_maintenance_request(row)
+

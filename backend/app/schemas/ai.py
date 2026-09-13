@@ -8,6 +8,10 @@ class AIRecommendationRequest(BaseModel):
     durationMinutes: int
     priority: str = "medium"
 
+    severity: int | None = None
+    overdueDays: int | None = None
+    assetCriticality: int | None = None
+
 
 class AIRecommendationResponse(BaseModel):
     section: str
@@ -16,3 +20,5 @@ class AIRecommendationResponse(BaseModel):
     recommendation: str
     confidence: float
     riskLevel: str
+    priority: str | None = None
+    priorityScore: int | None = None

@@ -1,3 +1,4 @@
+
 from fastapi.testclient import TestClient
 
 from backend.app.main import app
@@ -12,6 +13,7 @@ def test_health():
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
 
+
 def test_trains():
     response = client.get("/api/trains")
 
@@ -21,6 +23,7 @@ def test_trains():
 
     assert len(data) == 5
     assert data[0]["trainNumber"] == "12723"
+
 
 def test_sections():
     response = client.get("/api/sections")
@@ -32,6 +35,7 @@ def test_sections():
     assert len(data) == 3
     assert data[0]["name"] == "HYD-NGP"
 
+
 def test_maintenance_requests():
     response = client.get("/api/maintenance-requests")
 
@@ -40,6 +44,7 @@ def test_maintenance_requests():
     data = response.json()
 
     assert isinstance(data, list)
+
 
 def test_maintenance_blocks():
     response = client.get("/api/maintenance-blocks")
@@ -50,6 +55,7 @@ def test_maintenance_blocks():
 
     assert isinstance(data, list)
 
+
 def test_ai_recommendation():
     response = client.post(
         "/api/ai/recommend",
@@ -59,6 +65,9 @@ def test_ai_recommendation():
             "endTime": "2026-09-12T03:30:00",
             "durationMinutes": 90,
             "priority": "high",
+            "severity": 4,
+            "overdueDays": 3,
+            "assetCriticality": 5,
         },
     )
 
@@ -69,9 +78,14 @@ def test_ai_recommendation():
     assert data["section"] == "HYD-NGP"
     assert data["startTime"] == "2026-09-12T02:00:00"
     assert data["endTime"] == "2026-09-12T03:30:00"
-    assert data["recommendation"] == "Recommended maintenance window"
-    assert data["confidence"] == 0.8
-    assert data["riskLevel"] == "Low"
+    assert data["recommendation"] == (
+        "Schedule maintenance in the next suitable window"
+    )
+    assert data["confidence"] == 1.0
+    assert data["riskLevel"] == "Medium"
+    assert data["priority"] == "MEDIUM"
+    assert data["priorityScore"] == 33
+
 
 def test_planning_validation_generates_alerts():
     response = client.post(
@@ -92,3 +106,4 @@ def test_planning_validation_generates_alerts():
     assert data["alerts"][0]["alertType"] == "MAINTENANCE_CONFLICT"
     assert data["alerts"][0]["section"] == "HYD-NGP"
     assert data["alerts"][0]["status"] == "active"
+
