@@ -53,3 +53,39 @@ def prioritize_tasks(tasks: list) -> list:
     return prioritized_tasks
 def process_maintenance_tasks(tasks: list) -> list:
     return prioritize_tasks(tasks)
+def get_maintenance_recommendation(task: dict) -> dict:
+    score = calculate_priority_score(
+        task["severity"],
+        task["overdue_days"],
+        task["asset_criticality"]
+    )
+
+    priority = classify_priority(score)
+
+    if priority == "HIGH":
+        recommendation = "Schedule maintenance at the earliest available window"
+    elif priority == "MEDIUM":
+        recommendation = "Schedule maintenance in the next suitable window"
+    else:
+        recommendation = "Maintenance can be scheduled during a normal window"
+
+    return {
+        **task,
+        "priority_score": score,
+        "priority": priority,
+        "recommendation": recommendation
+    }
+
+
+def generate_maintenance_plan(tasks: list) -> list:
+    plan = []
+
+    for task in tasks:
+        plan.append(get_maintenance_recommendation(task))
+
+    plan.sort(
+        key=lambda task: task["priority_score"],
+        reverse=True
+    )
+
+    return plan
