@@ -40,8 +40,6 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { useLocation } from 'wouter';
-import { useRailzenWorkspace } from '@/components/railzen-workspace';
 
 type ConnectionState = 'loading' | 'connected' | 'not-connected';
 
@@ -196,14 +194,14 @@ function NetworkMap() {
 }
 
 function Home() {
-  const [, navigate] = useLocation();
   const railzen = useRailzenHealth();
   const platform = useHealthCheck();
   const [activeNav, setActiveNav] = useState('Overview');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [noticeOpen, setNoticeOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const { network, setNetwork, period, setPeriod } = useRailzenWorkspace();
+  const [period, setPeriod] = useState('This month');
+  const [network, setNetwork] = useState('Northline Region');
   const [query, setQuery] = useState('');
   const [showAllAlerts, setShowAllAlerts] = useState(false);
   const [dismissedAlerts, setDismissedAlerts] = useState<string[]>([]);
@@ -233,27 +231,12 @@ function Home() {
     Settings: 'workspace-settings',
   };
 
-  const navPaths: Record<string, string> = {
-   Overview: '/',
-  'Maintenance Planning': '/maintenance',
-  Network: '/network',
-  Assets: '/assets',
-  Alerts: '/alerts',
-  Analytics: '/analytics',
-  Reports: '/reports',
-  'AI Assistant': '/ai-assistant',
-  Settings: '/settings',
-};
-
-const handleNav = (label: string) => {
-  setActiveNav(label);
-  setMobileNavOpen(false);
-
-  const path = navPaths[label];
-  if (path) {
-    navigate(path);
-  }
-};
+  const handleNav = (label: string) => {
+    setActiveNav(label);
+    setMobileNavOpen(false);
+    const anchor = navAnchors[label];
+    if (anchor) window.setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+  };
 
   return (
     <main className="railzen-page flex min-h-[100dvh] bg-background">
