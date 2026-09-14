@@ -4,7 +4,17 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import Home from '@/pages/home';
+import MaintenancePlanning from '@/pages/maintenance-planning';
+import Network from '@/pages/network';
+import Analytics from '@/pages/analytics';
+import Assets from '@/pages/assets';
+import Alerts from '@/pages/alerts';
+import Reports from '@/pages/reports';
+import ReportDetail from '@/pages/report-detail';
+import AiAssistant from '@/pages/ai-assistant';
+import Settings from '@/pages/settings';
 import NotFound from '@/pages/not-found';
+import { RailzenWorkspaceProvider } from '@/components/railzen-workspace';
 import {
   Route,
   Switch,
@@ -21,6 +31,15 @@ function Router() {
     <RoutedErrorBoundary>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/maintenance" component={MaintenancePlanning} />
+        <Route path="/network" component={Network} />
+        <Route path="/analytics" component={Analytics} />
+        <Route path="/assets" component={Assets} />
+        <Route path="/alerts" component={Alerts} />
+        <Route path="/reports/:id" component={ReportDetail} />
+        <Route path="/reports" component={Reports} />
+        <Route path="/ai-assistant" component={AiAssistant} />
+        <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
     </RoutedErrorBoundary>
@@ -36,9 +55,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+        <RailzenWorkspaceProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <Router />
-        </WouterRouter>
+          </WouterRouter>
+        </RailzenWorkspaceProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

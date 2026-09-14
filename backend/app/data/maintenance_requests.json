@@ -1,0 +1,42 @@
+[
+  {
+    "id": "MR001",
+    "maintenanceType": "Track Inspection",
+    "requiredDurationMinutes": 90,
+    "priority": "High",
+    "preferredTime": "01:00",
+    "section": "HYD-NGP"
+  },
+  {
+    "id": "MR002",
+    "maintenanceType": "Signal Maintenance",
+    "requiredDurationMinutes": 120,
+    "priority": "Medium",
+    "preferredTime": "02:30",
+    "section": "SC-VSKP"
+  },
+  {
+    "id": "MR003",
+    "maintenanceType": "Overhead Equipment Inspection",
+    "requiredDurationMinutes": 150,
+    "priority": "High",
+    "preferredTime": "00:30",
+    "section": "MMR-HYD"
+  },
+  {
+    "id": "MR004",
+    "maintenanceType": "Rail Grinding",
+    "requiredDurationMinutes": 180,
+    "priority": "Low",
+    "preferredTime": "03:00",
+    "section": "HYD-NGP"
+  },
+  {
+    "id": "MR005",
+    "maintenanceType": "Bridge Inspection",
+    "requiredDurationMinutes": 120,
+    "priority": "Medium",
+    "preferredTime": "01:30",
+    "section": "SC-VSKP"
+  }
+]
