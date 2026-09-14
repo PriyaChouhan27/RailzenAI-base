@@ -28,3 +28,65 @@ export const HealthCheckResponse = zod.object({
 })
 
 
+/**
+ * Returns the synthetic demo train timetable
+ * @summary List trains
+ */
+export const ListTrainsResponseItem = zod.object({
+  "trainNumber": zod.string(),
+  "trainType": zod.string(),
+  "origin": zod.string(),
+  "destination": zod.string(),
+  "section": zod.string().describe('Name of the Section this train runs on'),
+  "arrivalTime": zod.string().describe('Local arrival time, HH:MM'),
+  "departureTime": zod.string().describe('Local departure time, HH:MM'),
+  "runningTimeMinutes": zod.number().int(),
+  "serviceDays": zod.array(zod.string())
+}).describe('A synthetic demo timetable entry for one train')
+export const ListTrainsResponse = zod.array(ListTrainsResponseItem)
+
+
+/**
+ * Returns the synthetic demo railway section reference data
+ * @summary List railway sections
+ */
+export const ListSectionsResponseItem = zod.object({
+  "name": zod.string(),
+  "stations": zod.array(zod.string()),
+  "distanceKm": zod.number(),
+  "lineType": zod.string(),
+  "traction": zod.string(),
+  "capacity": zod.number().int()
+}).describe('A synthetic demo railway section reference record')
+export const ListSectionsResponse = zod.array(ListSectionsResponseItem)
+
+
+/**
+ * Returns synthetic demo maintenance requests
+ * @summary List maintenance requests
+ */
+export const ListMaintenanceRequestsResponseItem = zod.object({
+  "id": zod.string(),
+  "maintenanceType": zod.string(),
+  "requiredDurationMinutes": zod.number().int(),
+  "priority": zod.enum(['High', 'Medium', 'Low']),
+  "preferredTime": zod.string().describe('Local preferred start time, HH:MM')
+}).describe('A synthetic demo maintenance request awaiting scheduling')
+export const ListMaintenanceRequestsResponse = zod.array(ListMaintenanceRequestsResponseItem)
+
+
+/**
+ * Returns synthetic demo maintenance block data
+ * @summary List maintenance blocks
+ */
+export const ListMaintenanceBlocksResponseItem = zod.object({
+  "id": zod.string(),
+  "section": zod.string().describe('Name of the Section this block applies to'),
+  "startTime": zod.coerce.date(),
+  "endTime": zod.coerce.date(),
+  "blockType": zod.string(),
+  "status": zod.enum(['Planned', 'Active', 'Completed', 'Cancelled'])
+}).describe('A synthetic demo maintenance block (a possession window on a section)')
+export const ListMaintenanceBlocksResponse = zod.array(ListMaintenanceBlocksResponseItem)
+
+

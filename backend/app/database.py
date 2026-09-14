@@ -1,4 +1,4 @@
-"""SQLite database setup for RailZen AI."""
+"""SQLite database setup for the RailZen AI backend."""
 
 from pathlib import Path
 import sqlite3
@@ -13,7 +13,7 @@ def get_database_path() -> Path:
 
 
 def get_connection() -> sqlite3.Connection:
-    """Open a SQLite connection with foreign-key support enabled."""
+    """Open a SQLite database connection."""
 
     database_path = get_database_path()
     database_path.parent.mkdir(parents=True, exist_ok=True)
@@ -21,16 +21,20 @@ def get_connection() -> sqlite3.Connection:
     connection = sqlite3.connect(database_path)
     connection.row_factory = sqlite3.Row
 
+<<<<<<< HEAD
     # Enforce foreign-key relationships in SQLite.
     connection.execute("PRAGMA foreign_keys = ON")
 
+=======
+>>>>>>> origin/backend
     return connection
 
 
 def initialize_database() -> None:
-    """Create all RailZen AI database tables if they do not exist."""
+    """Create the RailZen database tables."""
 
     with get_connection() as connection:
+        connection.execute("PRAGMA foreign_keys = ON")
 
         connection.executescript(
             """

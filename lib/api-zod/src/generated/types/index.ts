@@ -7,4 +7,10 @@
  */
 
 export * from './healthStatus';
+export * from './maintenanceBlock';
+export * from './maintenanceBlockStatus';
+export * from './maintenanceRequest';
+export * from './maintenanceRequestPriority';
 export * from './railZenHealthStatus';
+export * from './section';
+export * from './train';

@@ -15,3 +15,77 @@ export interface HealthStatus {
   status: string;
 }
 
+/**
+ * A synthetic demo timetable entry for one train
+ */
+export interface Train {
+  trainNumber: string;
+  trainType: string;
+  origin: string;
+  destination: string;
+  /** Name of the Section this train runs on */
+  section: string;
+  /** Local arrival time, HH:MM */
+  arrivalTime: string;
+  /** Local departure time, HH:MM */
+  departureTime: string;
+  runningTimeMinutes: number;
+  serviceDays: string[];
+}
+
+/**
+ * A synthetic demo railway section reference record
+ */
+export interface Section {
+  name: string;
+  stations: string[];
+  distanceKm: number;
+  lineType: string;
+  traction: string;
+  capacity: number;
+}
+
+export type MaintenanceRequestPriority = typeof MaintenanceRequestPriority[keyof typeof MaintenanceRequestPriority];
+
+
+export const MaintenanceRequestPriority = {
+  High: 'High',
+  Medium: 'Medium',
+  Low: 'Low',
+} as const;
+
+/**
+ * A synthetic demo maintenance request awaiting scheduling
+ */
+export interface MaintenanceRequest {
+  id: string;
+  maintenanceType: string;
+  requiredDurationMinutes: number;
+  priority: MaintenanceRequestPriority;
+  /** Local preferred start time, HH:MM */
+  preferredTime: string;
+}
+
+export type MaintenanceBlockStatus = typeof MaintenanceBlockStatus[keyof typeof MaintenanceBlockStatus];
+
+
+export const MaintenanceBlockStatus = {
+  Planned: 'Planned',
+  Active: 'Active',
+  Completed: 'Completed',
+  Cancelled: 'Cancelled',
+} as const;
+
+/**
+ * A synthetic demo maintenance block (a possession window on a section)
+ */
+export interface MaintenanceBlock {
+  id: string;
+  /** Name of the Section this block applies to */
+  section: string;
+  startTime: string;
+  endTime: string;
+  blockType: string;
+  status: MaintenanceBlockStatus;
+}
+

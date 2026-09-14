@@ -1,0 +1,27 @@
+[
+  {
+    "id": "ROUTE-001",
+    "name": "Hyderabad - Secunderabad - Kazipet",
+    "distanceKm": 145
+  },
+  {
+    "id": "ROUTE-002",
+    "name": "Kazipet - Vijayawada - Rajahmundry",
+    "distanceKm": 290
+  },
+  {
+    "id": "ROUTE-003",
+    "name": "Hyderabad - Kalaburagi - Solapur",
+    "distanceKm": 305
+  },
+  {
+    "id": "ROUTE-004",
+    "name": "Mumbai - Pune - Solapur",
+    "distanceKm": 410
+  },
+  {
+    "id": "ROUTE-005",
+    "name": "Vijayawada - Visakhapatnam",
+    "distanceKm": 350
+  }
+]
